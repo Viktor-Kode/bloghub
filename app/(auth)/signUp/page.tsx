@@ -15,11 +15,10 @@ export default function SignUp() {
 
   const [
     createUserWithEmailAndPassword,
-    createdUser,
     creating,
     createError,
   ] = useCreateUserWithEmailAndPassword(auth);
-  const [signInWithGoogle, googleUser, googleLoading, googleError] =
+  const [signInWithGoogle, googleLoading, googleError] =
     useSignInWithGoogle(auth);
   const [user, authLoading] = useAuthState(auth);
 

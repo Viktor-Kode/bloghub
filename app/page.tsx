@@ -1,10 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import Link from "next/link";
-import { Globe, Laptop, Notebook, Rocket, WholeWord } from "lucide-react";
+import { Globe, Notebook, Rocket,  } from "lucide-react";
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
