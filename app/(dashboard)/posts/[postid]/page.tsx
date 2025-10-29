@@ -16,14 +16,10 @@ type Post = {
   updatedAt?: Timestamp;
 };
 
-interface Params {
-  postid: string;
-}
-
 export default function PostPage() {
-  const params = useParams() as Params;
+  const params = useParams();
   const router = useRouter();
-  const postId = params.postid;
+  const postId = params.postid as string;
 
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
@@ -46,8 +42,15 @@ export default function PostPage() {
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          const data = docSnap.data() as Omit<Post, "id">;
-          setPost({ id: docSnap.id, ...data });
+          const data = docSnap.data();
+          setPost({ 
+            id: docSnap.id, 
+            title: data.title,
+            content: data.content,
+            author: data.author,
+            createdAt: data.createdAt,
+            updatedAt: data.updatedAt
+          } as Post);
         } else {
           setError(`Post with ID "${postId}" not found.`);
         }
@@ -80,6 +83,7 @@ export default function PostPage() {
 
   const readingTime = post ? Math.max(1, Math.ceil(post.content.split(/\s+/).length / 200)) : 0;
 
+  // Remove unused function or use it in the JSX
   const getAuthorInitials = (author: string) =>
     author
       .split(" ")
@@ -186,6 +190,26 @@ export default function PostPage() {
                 ))}
               </div>
             </div>
+
+            {/* Author Section - Now using getAuthorInitials */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="mt-12 pt-8 border-t border-gray-200"
+            >
+              <div className="flex items-center space-x-4">
+                <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center shadow-lg">
+                  <span className="text-white font-bold text-lg">
+                    {post && getAuthorInitials(post.author)}
+                  </span>
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-900 text-lg">{post?.author}</p>
+                  <p className="text-gray-500">Author</p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </motion.article>
 
