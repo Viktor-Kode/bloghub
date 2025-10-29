@@ -128,7 +128,10 @@ export default function LogIn() {
           </button>
         </div>
           <div className=" text-gray-500 text-center">
-          <p>Don't have an account? <Link className="text-blue-800" href={'/signUp'}>Signup</Link></p>
+<p>
+  {"Do not have an account? "}
+  <Link className="text-blue-800" href="/signUp">Signup</Link>
+</p>
         </div>
         <p className="mt-4 text-center text-xs text-gray-500">
           By continuing, you agree to our terms and privacy policy.

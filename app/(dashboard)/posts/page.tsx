@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
+import { collection, query, orderBy, onSnapshot, Timestamp } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import Link from "next/link";
 
@@ -10,7 +10,7 @@ interface Post {
   title: string;
   content: string;
   author: string;
-  createdAt?: any;
+  createdAt?: Timestamp;
 }
 
 export default function AllPosts() {
@@ -124,23 +124,19 @@ export default function AllPosts() {
                     Featured
                   </span>
                   <span className="text-sm text-gray-500">
-                    {posts[0].createdAt?.toDate ? (
-                      posts[0].createdAt.toDate().toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                      })
-                    ) : (
-                      'Recent'
-                    )}
+                    {posts[0].createdAt?.toDate
+                      ? posts[0].createdAt.toDate().toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })
+                      : "Recent"}
                   </span>
                 </div>
                 <h3 className="text-3xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
                   {posts[0].title}
                 </h3>
-                <p className="text-gray-600 text-lg mb-6 line-clamp-3">
-                  {posts[0].content}
-                </p>
+                <p className="text-gray-600 text-lg mb-6 line-clamp-3">{posts[0].content}</p>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
                     <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
@@ -165,10 +161,10 @@ export default function AllPosts() {
             <span className="w-3 h-3 bg-green-600 rounded-full mr-3"></span>
             Latest Posts
             <span className="ml-4 text-sm font-normal text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-              {posts.length} {posts.length === 1 ? 'post' : 'posts'}
+              {posts.length} {posts.length === 1 ? "post" : "posts"}
             </span>
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.slice(1).map((post, index) => (
               <Link
@@ -183,14 +179,12 @@ export default function AllPosts() {
                       #{index + 2}
                     </span>
                     <span className="text-xs text-gray-500">
-                      {post.createdAt?.toDate ? (
-                        post.createdAt.toDate().toLocaleDateString('en-US', {
-                          month: 'short',
-                          day: 'numeric'
-                        })
-                      ) : (
-                        'New'
-                      )}
+                      {post.createdAt?.toDate
+                        ? post.createdAt.toDate().toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                          })
+                        : "New"}
                     </span>
                   </div>
 
@@ -198,9 +192,7 @@ export default function AllPosts() {
                   <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
                     {post.title}
                   </h3>
-                  <p className="text-gray-600 mb-4 line-clamp-3 text-sm leading-relaxed">
-                    {post.content}
-                  </p>
+                  <p className="text-gray-600 mb-4 line-clamp-3 text-sm leading-relaxed">{post.content}</p>
 
                   {/* Author and Read More */}
                   <div className="flex items-center justify-between pt-4 border-t border-gray-100">
