@@ -80,17 +80,17 @@ export default function SignUp() {
 
           <button
             type="submit"
-            className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-3 rounded-lg shadow-sm hover:from-blue-700 hover:to-indigo-700 active:scale-[0.995] transition"
-            disabled={creating || authLoading}
+            className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-3 rounded-lg shadow-sm hover:from-blue-700 hover:to-indigo-700 active:scale-[0.995] transition disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={!!creating || !!authLoading}
           >
-            Sign up with email
+            {creating ? "Creating account..." : "Sign up with email"}
           </button>
 
-          {(createError || googleError) && (
-            <p className="text-sm text-red-600">
-              {createError?.message || googleError?.message}
-            </p>
-          )}
+        {(createError || googleError) && (
+  <p className="text-sm text-red-600">
+    {String(createError?.message || googleError?.message || 'An error occurred')}
+  </p>
+)}
         </form>
 
         <div className="mt-6 flex items-center">
@@ -102,10 +102,10 @@ export default function SignUp() {
         <div className="mt-6">
           <button
             type="button"
-            className="w-full flex items-center justify-center gap-3 py-3 border border-gray-200 rounded-lg bg-white hover:shadow-sm transition"
+            className="w-full flex items-center justify-center gap-3 py-3 border border-gray-200 rounded-lg bg-white hover:shadow-sm transition disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Sign in with Google"
             onClick={handleGoogleSignUp}
-            disabled={googleLoading || authLoading}
+            disabled={!!googleLoading || !!authLoading}
           >
             <span className="w-5 h-5 flex items-center justify-center">
               <svg
@@ -133,12 +133,12 @@ export default function SignUp() {
               </svg>
             </span>
             <span className="text-sm font-medium text-gray-700">
-              Continue with Google
+              {googleLoading ? "Connecting..." : "Continue with Google"}
             </span>
           </button>
         </div>
-        <div className=" text-gray-500 text-center">
-          <p>Already have an account <Link className="text-blue-800" href={'/login'}>Login</Link></p>
+        <div className=" text-gray-500 text-center mt-4">
+          <p>Already have an account <Link className="text-blue-800 hover:text-blue-900" href={'/login'}>Login</Link></p>
         </div>
 
         <p className="mt-4 text-center text-xs text-gray-500">

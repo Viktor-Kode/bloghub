@@ -3,11 +3,19 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import Link from "next/link";
-import { Globe, Notebook, Rocket,  } from "lucide-react";
+import { Globe, Notebook, Rocket } from "lucide-react";
+
+// Define types for API data
+interface User {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+}
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [topUser, setTopUser] = useState([]);
+  const [topUser, setTopUser] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Close menu on scroll
@@ -24,19 +32,19 @@ export default function Home() {
 
   // Popular categories with better images
   const Categories = [
-    { id: 1, name: "Technology"  , color: "from-blue-500 to-cyan-500", posts: "1.2K" },
-    { id: 2, name: "Lifestyle",  color: "from-purple-500 to-pink-500", posts: "856" },
+    { id: 1, name: "Technology", color: "from-blue-500 to-cyan-500", posts: "1.2K" },
+    { id: 2, name: "Lifestyle", color: "from-purple-500 to-pink-500", posts: "856" },
     { id: 3, name: "Business", color: "from-green-500 to-emerald-500", posts: "723" },
     { id: 4, name: "Health", color: "from-red-500 to-orange-500", posts: "642" },
     { id: 5, name: "Travel", color: "from-indigo-500 to-blue-500", posts: "534" },
-    { id: 6, name: "Food",  color: "from-yellow-500 to-orange-500", posts: "489" },
+    { id: 6, name: "Food", color: "from-yellow-500 to-orange-500", posts: "489" },
   ];
 
   // Features section
   const Features = [
-    { id: 1, title: "Write with Ease", description: "Beautiful editor with markdown support", icon: <Notebook/> },
-    { id: 2, title: "Reach Audience", description: "Share your thoughts with thousands of readers", icon: <Globe/>},
-    { id: 3, title: "Engage & Grow", description: "Build your community and get feedback", icon: <Rocket/> },
+    { id: 1, title: "Write with Ease", description: "Beautiful editor with markdown support", icon: <Notebook /> },
+    { id: 2, title: "Reach Audience", description: "Share your thoughts with thousands of readers", icon: <Globe /> },
+    { id: 3, title: "Engage & Grow", description: "Build your community and get feedback", icon: <Rocket /> },
   ];
 
   // Stats data
@@ -72,79 +80,77 @@ export default function Home() {
       </div>
 
       {/* Navbar */}
-  
-<nav className="relative z-50 flex justify-between items-center px-6 py-6 md:px-16">
-  <motion.div
-    initial={{ opacity: 0, x: -20 }}
-    animate={{ opacity: 1, x: 0 }}
-    className="flex items-center space-x-3"
-  >
-    <div className="w-10 h-10 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center shadow-lg">
-      <span className="text-white font-bold text-lg">B</span>
-    </div>
-    <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-      BlogHub
-    </span>
-  </motion.div>
-
-  {/* Desktop Nav */}
-  <ul className="hidden md:flex items-center space-x-8 text-lg font-medium">
-    <motion.li whileHover={{ y: -2 }} className="relative cursor-pointer hover:text-cyan-300 transition-colors">
-      <Link href="/">Home</Link>
-    </motion.li>
-    <motion.li whileHover={{ y: -2 }} className="relative cursor-pointer hover:text-cyan-300 transition-colors">
-      <Link href="/posts">Blog</Link>
-    </motion.li>
-    <motion.li whileHover={{ y: -2 }} className="relative cursor-pointer hover:text-cyan-300 transition-colors">
-      <Link href="/about">About</Link>
-    </motion.li>
-    <motion.li whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-      <Link
-        href="/signUp"
-        className="bg-gradient-to-r from-cyan-500 to-blue-500 px-6 py-2 rounded-xl font-semibold hover:shadow-lg transition-all"
-      >
-        Get Started
-      </Link>
-    </motion.li>
-  </ul>
-
-  {/* Mobile Toggle */}
-  <motion.button
-    whileTap={{ scale: 0.95 }}
-    onClick={() => setMenuOpen(!menuOpen)}
-    className="md:hidden text-2xl z-50 p-2 rounded-lg bg-white/10 backdrop-blur-sm"
-  >
-    {menuOpen ? "✕" : "☰"}
-  </motion.button>
-</nav>
-
-{/* Mobile Menu */}
-<AnimatePresence>
-  {menuOpen && (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      className="fixed inset-0 z-40 bg-slate-900/95 backdrop-blur-md flex items-center justify-center"
-    >
-      <div className="text-center space-y-8">
-        <motion.div whileHover={{ scale: 1.05 }} className="text-2xl font-semibold">
-          <Link href="/" onClick={handleLinkClick} className="hover:text-cyan-300 transition-colors">Home</Link>
+      <nav className="relative z-50 flex justify-between items-center px-6 py-6 md:px-16">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="flex items-center space-x-3"
+        >
+          <div className="w-10 h-10 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center shadow-lg">
+            <span className="text-white font-bold text-lg">B</span>
+          </div>
+          <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+            BlogHub
+          </span>
         </motion.div>
-        <motion.div whileHover={{ scale: 1.05 }} className="text-2xl font-semibold">
-          <Link href="/posts" onClick={handleLinkClick} className="hover:text-cyan-300 transition-colors">Blog</Link>
-        </motion.div>
-        <motion.div whileHover={{ scale: 1.05 }} className="text-2xl font-semibold">
-          <Link href="/about" onClick={handleLinkClick} className="hover:text-cyan-300 transition-colors">About</Link>
-        </motion.div>
-        <motion.div whileHover={{ scale: 1.05 }} className="text-2xl font-semibold">
-          <Link href="/login" onClick={handleLinkClick} className="hover:text-cyan-300 transition-colors">Login</Link>
-        </motion.div>
-      </div>
-    </motion.div>
-  )}
-</AnimatePresence>
 
+        {/* Desktop Nav */}
+        <ul className="hidden md:flex items-center space-x-8 text-lg font-medium">
+          <motion.li whileHover={{ y: -2 }} className="relative cursor-pointer hover:text-cyan-300 transition-colors">
+            <Link href="/">Home</Link>
+          </motion.li>
+          <motion.li whileHover={{ y: -2 }} className="relative cursor-pointer hover:text-cyan-300 transition-colors">
+            <Link href="/posts">Blog</Link>
+          </motion.li>
+          <motion.li whileHover={{ y: -2 }} className="relative cursor-pointer hover:text-cyan-300 transition-colors">
+            <Link href="/about">About</Link>
+          </motion.li>
+          <motion.li whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link
+              href="/signUp"
+              className="bg-gradient-to-r from-cyan-500 to-blue-500 px-6 py-2 rounded-xl font-semibold hover:shadow-lg transition-all"
+            >
+              Get Started
+            </Link>
+          </motion.li>
+        </ul>
+
+        {/* Mobile Toggle */}
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="md:hidden text-2xl z-50 p-2 rounded-lg bg-white/10 backdrop-blur-sm"
+        >
+          {menuOpen ? "✕" : "☰"}
+        </motion.button>
+      </nav>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="fixed inset-0 z-40 bg-slate-900/95 backdrop-blur-md flex items-center justify-center"
+          >
+            <div className="text-center space-y-8">
+              <motion.div whileHover={{ scale: 1.05 }} className="text-2xl font-semibold">
+                <Link href="/" onClick={handleLinkClick} className="hover:text-cyan-300 transition-colors">Home</Link>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} className="text-2xl font-semibold">
+                <Link href="/posts" onClick={handleLinkClick} className="hover:text-cyan-300 transition-colors">Blog</Link>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} className="text-2xl font-semibold">
+                <Link href="/about" onClick={handleLinkClick} className="hover:text-cyan-300 transition-colors">About</Link>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} className="text-2xl font-semibold">
+                <Link href="/login" onClick={handleLinkClick} className="hover:text-cyan-300 transition-colors">Login</Link>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Hero Section */}
       <section className="relative z-10 flex flex-col items-center text-center px-6 md:px-16 pt-10 md:pt-24 pb-20">
@@ -206,7 +212,6 @@ export default function Home() {
                 className="border border-cyan-400/50 text-cyan-300 font-semibold px-8 py-4 rounded-xl text-lg hover:bg-cyan-400/10 transition-all duration-300 inline-flex items-center space-x-2"
               >
                 <span>Explore Blogs</span>
-                
               </Link>
             </motion.div>
           </motion.div>
@@ -297,9 +302,6 @@ export default function Home() {
                 whileHover={{ scale: 1.05, y: -5 }}
                 className={`bg-gradient-to-br ${category.color} rounded-2xl p-6 text-center cursor-pointer group hover:shadow-2xl transition-all duration-300`}
               >
-                <div className="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">
-                  {category.icon}
-                </div>
                 <h3 className="font-bold text-white text-lg mb-2">{category.name}</h3>
                 <p className="text-white/70 text-sm">{category.posts} posts</p>
               </motion.div>
@@ -377,7 +379,7 @@ export default function Home() {
           </p>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Link
-              href="/signup"
+              href="/signUp" 
               className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold px-8 py-4 rounded-xl text-lg hover:shadow-2xl transition-all duration-300 inline-flex items-center space-x-2"
             >
               <span>Create Your Free Account</span>
