@@ -86,11 +86,11 @@ export default function SignUp() {
             {creating ? "Creating account..." : "Sign up with email"}
           </button>
 
-        {(createError || googleError) && (
-  <p className="text-sm text-red-600">
-    {String(createError?.message || googleError?.message || 'An error occurred')}
-  </p>
-)}
+          {(createError || googleError) && (
+            <p className="text-sm text-red-600">
+              Authentication error occurred. Please try again.
+            </p>
+          )}
         </form>
 
         <div className="mt-6 flex items-center">
