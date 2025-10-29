@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import React, { useState, useEffect } from "react";
 import { auth } from "../../firebase/config";
 import {
   useAuthState,
@@ -9,14 +10,13 @@ import {
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-
 export default function LogIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [signInWithEmailAndPassword, loading, error] =
     useSignInWithEmailAndPassword(auth);
-  const [signInWithGoogle,  googleLoading, googleError] =
+  const [signInWithGoogle, googleLoading, googleError] =
     useSignInWithGoogle(auth);
   const [user, authLoading] = useAuthState(auth);
 
@@ -26,7 +26,7 @@ export default function LogIn() {
     if (user) router.push("/dashboard");
   }, [user, router]);
 
-  const handleEmailLogin = async (e) => {
+  const handleEmailLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const result = await signInWithEmailAndPassword(email, password);
     if (result && result.user) router.push("/dashboard");
@@ -97,7 +97,7 @@ export default function LogIn() {
             onClick={handleGoogleLogin}
             disabled={googleLoading || authLoading}
           >
-           <span className="w-5 h-5 flex items-center justify-center">
+            <span className="w-5 h-5 flex items-center justify-center">
               <svg
                 viewBox="0 0 533.5 544.3"
                 xmlns="http://www.w3.org/2000/svg"
@@ -127,12 +127,16 @@ export default function LogIn() {
             </span>
           </button>
         </div>
-          <div className=" text-gray-500 text-center">
-<p>
-  {"Do not have an account? "}
-  <Link className="text-blue-800" href="/signUp">Signup</Link>
-</p>
+
+        <div className="text-gray-500 text-center mt-4">
+          <p>
+            Do not have an account?{" "}
+            <Link className="text-blue-800" href="/signUp">
+              Signup
+            </Link>
+          </p>
         </div>
+
         <p className="mt-4 text-center text-xs text-gray-500">
           By continuing, you agree to our terms and privacy policy.
         </p>
