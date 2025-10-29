@@ -14,17 +14,17 @@ export default function LogIn() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  // Remove unused variables by prefixing with underscore
+  // Remove unused user variables
   const [
     signInWithEmailAndPassword,
-    _userEmail, // Prefix with underscore to indicate unused
+    , // Skip the unused user variable
     loadingEmail,
     errorEmail,
   ] = useSignInWithEmailAndPassword(auth);
 
   const [
     signInWithGoogle,
-    _userGoogle, // Prefix with underscore to indicate unused
+    , // Skip the unused user variable
     loadingGoogle,
     errorGoogle,
   ] = useSignInWithGoogle(auth);
@@ -44,7 +44,6 @@ export default function LogIn() {
         router.push("/dashboard");
       }
     } catch (error) {
-      // Error is already handled by the hook
       console.error("Login error:", error);
     }
   };
@@ -56,7 +55,6 @@ export default function LogIn() {
         router.push("/dashboard");
       }
     } catch (error) {
-      // Error is already handled by the hook
       console.error("Google login error:", error);
     }
   };
@@ -122,7 +120,6 @@ export default function LogIn() {
             disabled={loadingGoogle || authLoading}
           >
             <span className="w-5 h-5 flex items-center justify-center">
-              {/* Google SVG */}
               <svg viewBox="0 0 533.5 544.3" xmlns="http://www.w3.org/2000/svg" className="w-5 h-5">
                 <path d="M533.5 278.4c0-17.6-1.6-35-4.7-51.7H272v97.9h146.9c-6.3 34.2-25 63.2-53.4 82.7v68.6h86.2c50.6-46.6 80.8-115.4 80.8-197.5z" fill="#4285F4"/>
                 <path d="M272 544.3c72.6 0 133.6-23.9 178.2-64.8l-86.2-68.6c-24 16.1-54.6 25.6-92 25.6-70.7 0-130.6-47.6-152-111.4H33.6v69.9C78.1 485.8 167.7 544.3 272 544.3z" fill="#34A853"/>

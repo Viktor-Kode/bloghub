@@ -28,7 +28,7 @@ export default function SignUp() {
     if (user) router.push("/dashboard");
   }, [user, router]);
 
-  const handleEmailSignUp = async (e) => {
+  const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     const result = await createUserWithEmailAndPassword(email, password);
     if (result && result.user) router.push("/dashboard");
@@ -61,7 +61,7 @@ export default function SignUp() {
               className="mt-1 w-full px-4 py-3 border border-gray-200 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
               placeholder="you@gmail.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
             />
           </label>
 
@@ -74,7 +74,7 @@ export default function SignUp() {
               className="mt-1 w-full px-4 py-3 border border-gray-200 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
               placeholder="Create a strong password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
             />
           </label>
 
