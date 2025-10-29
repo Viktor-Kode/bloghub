@@ -366,7 +366,7 @@ export default function Dashboard() {
                               'No date'
                             )}
                           </span>
-                          <div className="flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <div className="flex space-x-2 ">
                             <button
                               onClick={() => startEdit(post)}
                               className="px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg text-sm font-medium hover:bg-blue-200 transition-colors"
